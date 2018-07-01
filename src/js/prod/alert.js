@@ -8,61 +8,52 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var charLimit = 50;
+var Alert = function (_React$Component) {
+    _inherits(Alert, _React$Component);
 
-var Message = function (_React$Component) {
-    _inherits(Message, _React$Component);
+    function Alert(props) {
+        _classCallCheck(this, Alert);
 
-    function Message(props) {
-        _classCallCheck(this, Message);
-
-        var _this = _possibleConstructorReturn(this, (Message.__proto__ || Object.getPrototypeOf(Message)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Alert.__proto__ || Object.getPrototypeOf(Alert)).call(this, props));
 
         _this.state = {
-            message: []
+            message: _this.props.alertMsg
         };
+        _this.removeDOMElement = _this.removeDOMElement.bind(_this);
         return _this;
     }
 
-    _createClass(Message, [{
+    _createClass(Alert, [{
         key: "render",
         value: function render() {
-            var lstTemp = this.state.message;
-            var lstMsg = lstTemp.map(function (msg) {
-                return React.createElement(
-                    "div",
-                    { className: "message-card" },
-                    msg
-                );
-            });
+            var _this2 = this;
+
+            setTimeout(function () {
+                _this2.removeDOMElement();
+            }, 2000);
             return React.createElement(
                 "div",
-                null,
-                lstMsg
+                { className: "alert alert-danger", role: "alert" },
+                React.createElement(
+                    "strong",
+                    null,
+                    "Error!"
+                ),
+                " ",
+                this.state.message
             );
         }
     }, {
-        key: "updateMsg",
-        value: function updateMsg(value) {
-            this.setState({
-                message: this.state.message.concat(value)
-            });
+        key: "removeDOMElement",
+        value: function removeDOMElement() {
+            ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(this).parentNode);
         }
     }]);
 
-    return Message;
+    return Alert;
 }(React.Component);
 
-var component = document.getElementById("divMsg");
-var messageRender = ReactDOM.render(React.createElement(Message, null), component);
-
-var renderMsg = function renderMsg(value) {
-    var success = true;
-    var objMsg = splitMessage(value, charLimit);
-    if (objMsg.length > 0) {
-        messageRender.updateMsg(objMsg);
-    } else {
-        success = false;
-    }
-    return success;
+var renderAlert = function renderAlert(value) {
+    var component = document.getElementById("divAlert");
+    ReactDOM.render(React.createElement(Alert, { alertMsg: value }), component);
 };

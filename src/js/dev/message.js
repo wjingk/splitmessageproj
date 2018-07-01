@@ -16,10 +16,7 @@ class Message extends React.Component
     {
         const lstTemp = this.state.message;
         const lstMsg = lstTemp.map((msg) =>
-            <div className="message-container">
-                <div className="message-card">{msg.value}</div>
-                <div className="message-time">{msg.date}</div>
-            </div>
+            <div className="message-card">{msg}</div>
         );
         return (
             <div>{lstMsg}</div>
@@ -43,8 +40,6 @@ let renderMsg = function (value) {
     if (objMsg.length > 0)
     {
         messageRender.updateMsg(objMsg);
-        for (let i = 0; i < objMsg.length; i++)
-            console.log("Length: " + objMsg[i].value.length + " | " + objMsg[i].value);
     }
     else
     {

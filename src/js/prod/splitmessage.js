@@ -10,10 +10,7 @@ function splitMessage(userInput, charLimit)
     let objMsg = [];
     if (userInput.length <= charLimit)
     {
-        objMsg.push({
-            value: userInput,
-            date: new Date().toLocaleTimeString()
-        });
+        objMsg.push(userInput);
     }
     else
     {
@@ -54,10 +51,7 @@ function splitMessage(userInput, charLimit)
 
                 if (reset)
                 {
-                    objMsg.push({
-                        value: currentChunk,
-                        date: new Date().toLocaleTimeString()
-                    });
+                    objMsg.push(currentChunk);
                     currentChunk = currentWord;
                     reset = false;
                 }
@@ -65,7 +59,7 @@ function splitMessage(userInput, charLimit)
 
             for (let i = 0; i < objMsg.length; i++)
             {
-                objMsg[i].value = getIndicator(i + 1, objMsg.length) + objMsg[i].value;
+                objMsg[i] = getIndicator(i + 1, objMsg.length) + objMsg[i];
             }
         }
     }
