@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tweeter</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/userdefineclasses.css">
+        <script src="js/prod/jquery-3.3.1.min.js"></script>
+        <script src="js/prod/bootstrap.min.js"></script>
+        <script src="js/prod/react.production.min.js"></script>
+        <script src="js/prod/react-dom.production.min.js"></script>
+        <!--<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>-->
+    </head>
+
+    <body>
+        <div class="user-info">
+            Test User
+        </div>
+
+        <div id="divMsg" class="message-main-container"></div>
+        
+        <div class="user-input">
+            <input id="txtInput" class="text-input" placeholder="Start a Message">
+            <button class="button-input" onclick="btnSendMsgClick()">Send</button>
+        </div>
+        
+        <script src="js/prod/splitmessage.js"></script>
+        <script src="js/prod/message.js"></script>
+        <script>
+            'use strict'
+
+            var inputMsg = document.getElementById("txtInput");
+            inputMsg.addEventListener("keyup", function (event) {
+                event.preventDefault();
+                if (event.keyCode === 13)
+                    btnSendMsgClick();
+            });
+
+            function btnSendMsgClick()
+            {
+                if (inputMsg.value != "")
+                {
+                    let success = renderMsg(inputMsg.value);   
+                    if (success)
+                    {
+                        inputMsg.value = "";
+                        let divMsg = document.getElementById("divMsg");
+                        divMsg.scrollTop = divMsg.scrollHeight;
+                    }
+                    else
+                    {
+                        alert("Message sending contain words more than 50 characters. Please try again.");
+                    }
+                }
+                
+            }
+        </script>
+    </body>
+</html>
