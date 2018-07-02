@@ -28,13 +28,22 @@ var Message = function (_React$Component) {
         key: "render",
         value: function render() {
             var lstTemp = this.state.message;
-            var lstMsg = lstTemp.map(function (msg) {
-                return React.createElement(
-                    "div",
-                    { className: "message-card" },
-                    msg
-                );
-            });
+            var lstMsg = [];
+            for (var i = 0; i < lstTemp.length; i++) {
+                if (lstTemp[i].type == "image") {
+                    lstMsg.push(React.createElement(
+                        "div",
+                        { className: "message-card" },
+                        React.createElement("img", { src: lstTemp[i].value })
+                    ));
+                } else {
+                    lstMsg.push(React.createElement(
+                        "div",
+                        { className: "message-card" },
+                        lstTemp[i].value
+                    ));
+                }
+            }
             return React.createElement(
                 "div",
                 null,
@@ -43,9 +52,16 @@ var Message = function (_React$Component) {
         }
     }, {
         key: "updateMsg",
-        value: function updateMsg(value) {
+        value: function updateMsg(objMsg, type) {
+            var arrMsg = [];
+            for (var i = 0; i < objMsg.length; i++) {
+                arrMsg.push({
+                    value: objMsg[i],
+                    type: type
+                });
+            }
             this.setState({
-                message: this.state.message.concat(value)
+                message: this.state.message.concat(arrMsg)
             });
         }
     }]);
@@ -56,11 +72,16 @@ var Message = function (_React$Component) {
 var component = document.getElementById("divMsg");
 var messageRender = ReactDOM.render(React.createElement(Message, null), component);
 
+var addImage = function addImage(value) {
+    messageRender.updateMsg([value], "image");
+    return true;
+};
+
 var renderMsg = function renderMsg(value) {
     var success = true;
     var objMsg = splitMessage(value, charLimit);
     if (objMsg.length > 0) {
-        messageRender.updateMsg(objMsg);
+        messageRender.updateMsg(objMsg, "text");
     } else {
         success = false;
     }

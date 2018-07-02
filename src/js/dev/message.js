@@ -15,18 +15,35 @@ class Message extends React.Component
     render()
     {
         const lstTemp = this.state.message;
-        const lstMsg = lstTemp.map((msg) =>
-            <div className="message-card">{msg}</div>
-        );
+        let lstMsg = [];
+        for (let i = 0; i < lstTemp.length; i++)
+        {
+            if (lstTemp[i].type == "image")
+            {
+                lstMsg.push(<div className="message-card"><img src={lstTemp[i].value} /></div>);
+            }
+            else
+            {
+                lstMsg.push(<div className="message-card">{lstTemp[i].value}</div>);
+            }
+        }
         return (
             <div>{lstMsg}</div>
         );
     }
 
-    updateMsg(value)
+    updateMsg(objMsg, type)
     {
+        let arrMsg = [];
+        for (let i = 0; i < objMsg.length; i++)
+        {
+            arrMsg.push({
+                value: objMsg[i],
+                type: type
+            });
+        }
         this.setState({
-            message: this.state.message.concat(value)
+            message: this.state.message.concat(arrMsg)
         });
     }
 }
@@ -34,12 +51,17 @@ class Message extends React.Component
 let component = document.getElementById("divMsg");
 const messageRender = ReactDOM.render(<Message />, component);
 
-let renderMsg = function (value) {
+let addImage = function(value) {
+    messageRender.updateMsg([value], "image");
+    return true;
+}
+
+let renderMsg = function(value) {
     let success = true;
     let objMsg = splitMessage(value, charLimit);
     if (objMsg.length > 0)
     {
-        messageRender.updateMsg(objMsg);
+        messageRender.updateMsg(objMsg, "text");
     }
     else
     {
