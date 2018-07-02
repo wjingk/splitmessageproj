@@ -7,6 +7,19 @@ inputMsg.addEventListener("keyup", function (event) {
         btnSendMsgClick();
 });
 
+setMessageContainerHeight();
+
+window.addEventListener("resize", function() {
+    setMessageContainerHeight();
+});
+
+function setMessageContainerHeight()
+{
+    let divMsg = document.getElementById("divMsg");
+    let height = (window.innerHeight - 110).toString() + "px";
+    divMsg.setAttribute("style", "height: " + height);
+}
+
 function btnSendMsgClick()
 {
     if (inputMsg.value != "")

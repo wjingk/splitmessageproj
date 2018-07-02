@@ -53,7 +53,6 @@ const messageRender = ReactDOM.render(<Message />, component);
 
 let addImage = function(value) {
     messageRender.updateMsg([value], "image");
-    return true;
 }
 
 let renderMsg = function(value) {
