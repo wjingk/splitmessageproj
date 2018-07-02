@@ -7,15 +7,15 @@
         <link rel="stylesheet" href="css/userdefineclasses.css">
         <script src="js/prod/jquery-3.3.1.min.js"></script>
         <script src="js/prod/bootstrap.min.js"></script>
-        <!--<script src="js/prod/react.production.min.js"></script>
-        <script src="js/prod/react-dom.production.min.js"></script>-->
-        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="js/prod/react.production.min.js"></script>
+        <script src="js/prod/react-dom.production.min.js"></script>
+        <!--<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>-->
     </head>
 
     <body>
         <div class="user-info">
-            Test User
+            test user
         </div>
 
         <div id="divMsg" class="message-main-container"></div>
@@ -30,35 +30,6 @@
         <script src="js/prod/splitmessage.js"></script>
         <script src="js/prod/message.js"></script>
         <script src="js/prod/alert.js"></script>
-        <script>
-            'use strict'
-
-            var inputMsg = document.getElementById("txtInput");
-            inputMsg.addEventListener("keyup", function (event) {
-                event.preventDefault();
-                if (event.keyCode === 13)
-                    btnSendMsgClick();
-            });
-
-            function btnSendMsgClick()
-            {
-                if (inputMsg.value != "")
-                {
-                    let success = renderMsg(inputMsg.value);   
-                    if (success)
-                    {
-                        inputMsg.value = "";
-                        let divMsg = document.getElementById("divMsg");
-                        divMsg.scrollTop = divMsg.scrollHeight;
-                    }
-                    else
-                    {
-                        renderAlert("Message sending contain words more than 50 characters. Please try again.");
-                        //alert("Message sending contain words more than 50 characters. Please try again.");
-                    }
-                }
-                
-            }
-        </script>
+        <script src="js/prod/main.js"></script>
     </body>
 </html>

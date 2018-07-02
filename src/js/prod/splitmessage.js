@@ -5,7 +5,12 @@ function getIndicator(index, totalPartial)
     return index + "/" + totalPartial + " ";
 }
 
-function splitMessage(userInput, charLimit)
+var stest = function stest()
+{
+    return true;
+}
+
+function splitMessage (userInput, charLimit)
 {
     let objMsg = [];
     if (userInput.length <= charLimit)
