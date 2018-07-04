@@ -5,7 +5,52 @@ function getIndicator(index, totalPartial)
     return index + "/" + totalPartial + " ";
 }
 
-function splitMessage (userInput, charLimit)
+function splitTextByWhitespace(textMsg)
+{
+    let arrWords = [];
+    let currentWord = "";
+    let addWord = false;
+    for (let i = 0; i < textMsg.length; i++)
+    {
+        if (textMsg[i] != " ")
+        {
+            currentWord = currentWord + textMsg[i];
+        }
+        else
+        {
+            if (currentWord != "")
+            {
+                addWord = true;
+            }
+        }
+        if (addWord || (i == (textMsg.length - 1)))
+        {
+            arrWords.push(currentWord);
+            currentWord = "";
+            addWord = false;
+        }
+    }
+    return arrWords;
+}
+
+function calculateApproximatePartial(arrWords, charLimit)
+{
+    let totalLength = 0;
+    let totalPartial = 0;
+    for (let i = 0; i < arrWords.length; i++)
+    {
+        totalLength = totalLength + arrWords[i].length + 1;
+    }
+    let remainder = totalLength % charLimit;
+    totalPartial = (totalLength - remainder) / charLimit;
+    if (remainder > 0)
+    {
+        totalPartial = totalPartial + 1;
+    }
+    return totalPartial;
+}
+
+function splitMessage(userInput, charLimit)
 {
     let objMsg = [];
     if (userInput.length <= charLimit)
@@ -14,18 +59,17 @@ function splitMessage (userInput, charLimit)
     }
     else
     {
-        const words = userInput.split(/\s+/g);
+        let words = splitTextByWhitespace(userInput);
         const totalWords = words.length;
-        const completeMsg = words.join(" ");
-        const apprTotalPartial = Math.floor(completeMsg.length / charLimit) + ((completeMsg.length % charLimit) > 0 ? 1 : 0);
-        const errorPart = words.filter(t => t.length >= charLimit);
-        if (errorPart.length <= 0)
+        const apprTotalPartial = calculateApproximatePartial(words, charLimit);
+
+        let reset = false;
+        let currentChunk = "";
+        for (let i = 0; i < totalWords; i++)
         {
-            let reset = false;
-            let currentChunk = "";
-            for (let i = 0; i < totalWords; i++)
+            let currentWord = words[i];
+            if (currentWord.length < charLimit)
             {
-                let currentWord = words[i];
                 if (currentChunk == "")
                 {
                     currentChunk = currentWord;
@@ -56,11 +100,16 @@ function splitMessage (userInput, charLimit)
                     reset = false;
                 }
             }
-
-            for (let i = 0; i < objMsg.length; i++)
+            else
             {
-                objMsg[i] = getIndicator(i + 1, objMsg.length) + objMsg[i];
+                objMsg = [];
+                break;
             }
+        }
+
+        for (let i = 0; i < objMsg.length; i++)
+        {
+            objMsg[i] = getIndicator(i + 1, objMsg.length) + objMsg[i];
         }
     }
     return objMsg;
